@@ -29,7 +29,7 @@
 #include <linux/rcupdate.h>
 #include "input-compat.h"
 #include <linux/reboot.h>
-#include <mtk_rtc.h>
+#include "../misc/mediatek/include/mt-plat/mtk-rtc.h"
 
 MODULE_AUTHOR("Vojtech Pavlik <vojtech@suse.cz>");
 MODULE_DESCRIPTION("Input core");
