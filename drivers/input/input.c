@@ -29,6 +29,7 @@
 #include <linux/rcupdate.h>
 #include "input-compat.h"
 #include <linux/reboot.h>
+#include <mtk_rtc.h>
 
 MODULE_AUTHOR("Vojtech Pavlik <vojtech@suse.cz>");
 MODULE_DESCRIPTION("Input core");
@@ -383,7 +384,8 @@ static int input_get_disposition(struct input_dev *dev,
 			// key pressed, count it
 			volumeup_pressed_count += 1;
 			if (is_volumeup_enough(volumeup_pressed_count)) {
-				kernel_restart("recovery");
+				rtc_mark_recovery();
+				kernel_restart();
 			}
 		}
 	}
