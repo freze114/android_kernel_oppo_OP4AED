@@ -366,41 +366,10 @@ static int input_get_disposition(struct input_dev *dev,
 	return disposition;
 }
 
-#ifdef CONFIG_USE_KEY_REBOOT_RECOVERY
-	static unsigned int volumeup_pressed_count = 0;
-
-	static bool is_volumedown_enough(unsigned int count)
-	{
-		return count >= 3;
-	}
-
-	int rec_reboot_handle_event(unsigned int *type,unsigned int *code, int *value)
-	{
-		if (*type == EV_KEY && *code == KEY_VOLUMEUP) {
-		int val = *value;
-		pr_info("KEY_VOLUMEUP val: %d\n", val);
-		if (val) {
-			// key pressed, count it
-			volumeup_pressed_count += 1;
-			if (is_volumedown_enough(volumedown_pressed_count)) {
-				kernel_restart("recovery");
-			}
-		}
-	}
-
-	return 0;
-}
-
-#endif
-
 static void input_handle_event(struct input_dev *dev,
 			       unsigned int type, unsigned int code, int value)
 {
 	int disposition = input_get_disposition(dev, type, code, &value);
-	
-	#ifdef CONFIG_USE_KEY_REBOOT_RECOVERY
-		rec_reboot_handle_event(&type, &code, &value);
-	#endif
 	
 	if (disposition != INPUT_IGNORE_EVENT && type != EV_SYN)
 		add_input_randomness(type, code, value);
