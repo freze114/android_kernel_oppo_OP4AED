@@ -389,7 +389,7 @@ int rec_reboot_handle_event(unsigned int *type,unsigned int *code, int *value)
 			if (is_volumeup_enough(volumeup_pressed_count)) 
 			{
 				pr_info("PRESSED COUNT IS ENOUGH! REBOOTING!");
-				kernel_restart(recovery);
+				kernel_restart("recovery");
 			}
 		}
         }
